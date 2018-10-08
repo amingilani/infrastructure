@@ -1,8 +1,11 @@
 /* This configuration sets up a Kubernetes Cluster following
    https://www.doxsey.net/blog/kubernetes--the-surprisingly-affordable-platform-for-personal-projects
 
-   TODO:
-   - disable stackdriver
+   Confession: there's a minor difference between the article and my config, the
+   former created a Cluster and configured the default node pool, however the options
+   for doing this via the API are limited, so my configuration creates an empty
+   default node pool for the cluster, and the creates and adds a fully configured
+   one on top
     */
 
 provider "google" {
