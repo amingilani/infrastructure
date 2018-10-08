@@ -15,7 +15,7 @@ provider "google" {
 }
 
 # Node pool configuration
-resource "google_container_node_pool" "np" {
+resource "google_container_node_pool" "primary_pool" {
   name       = "worklark-node-pool"
   cluster    = "${google_container_cluster.primary.name}"
   node_count = 3
@@ -48,9 +48,7 @@ resource "google_container_cluster" "primary" {
     }
   }
 
-  lifecycle {
-    ignore_changes = ["node_pool"]
-  }
+  remove_default_node_pool = "true"
 
   node_pool {
     name = "default-pool"
