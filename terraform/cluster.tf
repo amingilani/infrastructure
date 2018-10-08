@@ -7,18 +7,21 @@
 
 
 provider "google" {
-  credentials = "${file("account.json")}"
-  project     = "my-gce-project-id"
-  region      = "us-central1-a"
+  credentials = "${file("secret-account.json")}"
+  project     = "worklark"
+  zone      = "us-central1-a"
 }
 
 # configuration
 resource "google_container_cluster" "primary" {
-  name               = "gke-example"
-  zone               = "europe-west2-a"
+  name               = "worklark-cluster"
   initial_node_count = 3
-  machine_type = "f1-micro"
-  preemptible = true
+
+  node_config {
+    machine_type = "f1-micro"
+    disk_size_gb = 10 # Set the initial disk size
+    preemptible = true
+  }
 
   addons_config {
     kubernetes_dashboard {
@@ -29,9 +32,5 @@ resource "google_container_cluster" "primary" {
       disabled = false # Configure the Kubernetes dashboard
     }
 
-  }
-
-  node_config {
-    disk_size_gb = "10GB" # Set the initial disk size
   }
 }
