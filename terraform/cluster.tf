@@ -5,11 +5,20 @@
    - disable stackdriver
     */
 
-
 provider "google" {
   credentials = "${file("secret-account.json")}"
-  project     = "worklark"
+  project     = "worklark-218609"
   zone      = "us-central1-a"
+}
+
+# Node pool configuration
+resource "google_container_node_pool" "np" {
+  cluster    = "${google_container_cluster.primary.name}"
+  node_count = 3
+  management {
+    auto_repair = true
+    auto_upgrade = true
+  }
 }
 
 # configuration
