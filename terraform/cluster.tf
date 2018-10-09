@@ -8,12 +8,6 @@
    one on top
     */
 
-provider "google" {
-  credentials = "${file("secret-account.json")}"
-  project     = "worklark-218609"
-  zone        = "us-central1-a"
-}
-
 # Node pool configuration
 resource "google_container_node_pool" "primary_pool" {
   name       = "worklark-node-pool"
@@ -49,6 +43,10 @@ resource "google_container_cluster" "primary" {
   }
 
   remove_default_node_pool = "true"
+
+  lifecycle {
+    ignore_changes = "node_pool"
+  }
 
   node_pool {
     name = "default-pool"
