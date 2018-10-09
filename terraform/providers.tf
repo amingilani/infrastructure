@@ -1,7 +1,7 @@
 provider "google" {
   credentials = "${file("secret-account.json")}"
-  project     = "worklark-218912"
-  zone        = "us-central1-a"
+  project     = "${var.project}"
+  zone        = "${var.zone}"
 }
 
 provider "kubernetes" {

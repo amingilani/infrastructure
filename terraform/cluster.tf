@@ -31,6 +31,7 @@ resource "google_container_cluster" "primary" {
   name               = "worklark-cluster"
   logging_service    = "none"
   monitoring_service = "none"
+  network = "projects/${var.project}/global/networks/default"
 
   addons_config {
     kubernetes_dashboard {
@@ -50,18 +51,5 @@ resource "google_container_cluster" "primary" {
 
   node_pool {
     name = "default-pool"
-  }
-}
-
-resource "google_compute_firewall" "default" {
-  name        = "http-https"
-  network     = "${google_container_cluster.primary.network}"
-  description = "Enable HTTP and HTTPS access"
-
-  direction = "INGRESS"
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
   }
 }
