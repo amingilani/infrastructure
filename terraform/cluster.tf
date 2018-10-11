@@ -31,7 +31,7 @@ resource "google_container_cluster" "primary" {
   name               = "worklark-cluster"
   logging_service    = "none"
   monitoring_service = "none"
-  network = "projects/${var.project}/global/networks/default"
+  network            = "projects/${var.project}/global/networks/default"
 
   addons_config {
     kubernetes_dashboard {
