@@ -18,6 +18,12 @@ resource "google_container_node_pool" "primary_pool" {
     machine_type = "f1-micro"
     disk_size_gb = 10         # Set the initial disk size
     preemptible  = true
+    oauth_scopes = [
+      "compute-rw",
+      "storage-ro",
+      "logging-write",
+      "monitoring",
+    ]
   }
 
   management {
