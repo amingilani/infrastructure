@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worklark-website-production
+  labels:
+    app: worklark-website-production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worklark-website-production
+  template:
+    metadata:
+      labels:
+        app: worklark-website-production
+    spec:
+      containers:
+      - name: worklark-website-production
+        image: gcr.io/worklark-218912/worklark-website:latest
+        ports:
+        - containerPort: 3000
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: worklark-website-production
+spec:
+  selector:
+    app: worklark-website-production
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
