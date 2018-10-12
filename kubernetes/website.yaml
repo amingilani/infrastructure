@@ -26,7 +26,7 @@ spec:
                 name: production-database-credentials
                 key: database_url
       - name: cloudsql-proxy
-        image: gcr.io/cloudsql-docker/gce-proxy:1.11
+        image: gcr.io/cloudsql-docker/gce-proxy:1.13
         command: ["/cloud_sql_proxy",
                   "-instances=<INSTANCE_CONNECTION_NAME>=tcp:5432",
                   "-credential_file=/secrets/cloudsql/credentials.json"]
