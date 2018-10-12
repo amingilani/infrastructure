@@ -28,7 +28,7 @@ spec:
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.13
         command: ["/cloud_sql_proxy",
-                  "-instances=<$INSTANCE_CONNECTION_NAME>=tcp:5432",
+                  "-instances=$(INSTANCE_CONNECTION_NAME)=tcp:5432",
                   "-credential_file=/secrets/cloudsql/credentials.json"]
         securityContext:
           runAsUser: 2  # non-root user
@@ -37,12 +37,12 @@ spec:
           - name: cluster-account-credentials
             mountPath: /secrets/cloudsql
             readOnly: true
-         env:
-           - name: INSTANCE_CONNECTION_NAME
-             valueFrom:
-               configMapKeyRef:
-                 name: production-database-host
-                 key: connection_name
+        env:
+         - name: INSTANCE_CONNECTION_NAME
+           valueFrom:
+             configMapKeyRef:
+               name: production-database-host
+               key: connection_name
       volumes:
         - name: cluster-account-credentials
           secret:
