@@ -20,7 +20,17 @@ resource "google_sql_user" "production_user" {
   password   = "${random_string.password.result}"
 }
 
-resource "kubernetes_secret" "production-database-user" {
+resource "kubernetes_config_map" "production_database_host" {
+  metadata {
+    name = "production-database-host"
+  }
+
+  data {
+    connection_name = "${google_sql_database_instance.master.connection_name}"
+  }
+}
+
+resource "kubernetes_secret" "production_database_credentials" {
   metadata {
     name = "production-database-credentials"
   }
