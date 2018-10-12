@@ -26,7 +26,6 @@ resource "kubernetes_secret" "production-database-user" {
   }
 
   data {
-    username = "${google_sql_user.production_user.name}"
-    password = "${google_sql_user.production_user.password}"
+    database_url = "postgresql://${google_sql_user.production_user.name}:${google_sql_user.production_user.password}@${google_sql_database_instance.master.ip_address.0.ip_address}:5432/${google_sql_database.worklark.name}?encoding=utf8&pool=5&timeout=5000"
   }
 }
