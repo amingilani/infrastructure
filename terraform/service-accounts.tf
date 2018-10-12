@@ -6,7 +6,7 @@ resource "google_service_account" "cluster_account" {
   display_name = "Cluster account"
 }
 
-resource "google_project_iam_binding" "admin-account-iam" {
+resource "google_project_iam_binding" "cluster_account_iam" {
     role = "roles/cloudsql.client"
     members = [
       "serviceAccount:${google_service_account.cluster_account.email}",
@@ -17,9 +17,9 @@ resource "google_service_account_key" "cluster_key" {
   service_account_id = "${google_service_account.cluster_account.name}"
 }
 
-resource "kubernetes_secret" "google-application-credentials" {
+resource "kubernetes_secret" "cluster_account_credentials" {
   metadata {
-    name = "google-application-credentials"
+    name = "cluster-account-credentials"
   }
   data {
     credentials.json = "${base64decode(google_service_account_key.cluster_key.private_key)}"
